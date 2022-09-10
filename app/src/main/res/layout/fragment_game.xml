@@ -6,10 +6,10 @@
              tools:context=".GameFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-            android:id="@+id/Hello"
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/GameRv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+            />
 
 </FrameLayout>

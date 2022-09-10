@@ -1,5 +1,7 @@
 package com.sangnq2498.memorygame
 
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -19,7 +22,16 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
  */
 class GameFragment : Fragment() {
 
+    private  lateinit var caller:GameFragmentListener
+    interface  GameFragmentListener{
+        fun makeTiles(): ArrayList<TextView>
+    }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is GameFragmentListener)
+            caller=context
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,9 +39,13 @@ class GameFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val frag = inflater.inflate(R.layout.fragment_game, container, false)
+
+        val recyclerView:RecyclerView=frag.findViewById(R.id.GameRv)
+        recyclerView.layoutManager=GridLayoutManager(this.context,4)
+        val textviews=caller.makeTiles()
+        recyclerView.adapter=GameRecyclerAdapter(textviews)
         return frag
     }
-
     companion object {
         @JvmStatic
         fun newInstance(): GameFragment = GameFragment()
